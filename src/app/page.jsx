@@ -62,7 +62,7 @@ export default function Home() {
                 <input
                   placeholder='Drop your email . . .'
                   type='text'
-                  className='w-full text-xs outline-none md:text-sm text-slate-500'
+                  className='w-full text-sm border-none outline-none text-slate-600 focus:border-none focus:border-transparent focus:ring-0'
                 />
                 <a
                   href='#'

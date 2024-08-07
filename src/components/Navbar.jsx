@@ -15,7 +15,7 @@ const Navbar = () => {
                 id='search'
                 name='search'
                 type='text'
-                className='w-full text-sm outline-none text-slate-600'
+                className='w-full text-sm border-none outline-none text-slate-600 focus:border-none focus:border-transparent focus:ring-0'
                 placeholder='Search anything . . .'
               />
               <svg
