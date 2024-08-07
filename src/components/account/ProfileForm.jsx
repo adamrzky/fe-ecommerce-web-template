@@ -15,7 +15,7 @@ const ProfileForm = ({isEdit, setIsEdit}) => {
    const handleSubmit = async () => {
       const {name, city, phone, date, gender, address} = inputRef.current;
       const profileModel = {
-         user_id: Number(ID),
+         // user_id: Number(ID),
          name: name.value,
          city: city.value,
          phone: phone.value,
@@ -34,7 +34,7 @@ const ProfileForm = ({isEdit, setIsEdit}) => {
          } else {
             await axios.post(`${baseUrl}/profiles`, profileModel, {
                headers: {
-                  Authorization: user.token,
+                  Authorization: `Bearer ${user.token}`
                }
             });
          }
