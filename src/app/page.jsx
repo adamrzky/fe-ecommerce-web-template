@@ -60,9 +60,9 @@ export default function Home() {
             <div className='flex items-center justify-center mt-6 md:mt-12'>
               <div className='flex items-center mx-auto md:max-w-[650px] w-full bg-white rounded-full py-4 px-6'>
                 <input
-                  placeholder='Drop your email . . .'
+                  placeholder='Drop your email...'
                   type='text'
-                  className='w-full text-xs outline-none md:text-sm text-slate-500'
+                  className='w-full text-xs border-0 outline-none md:text-sm text-slate-500 focus:outline-none focus:ring-0'
                 />
                 <a
                   href='#'
