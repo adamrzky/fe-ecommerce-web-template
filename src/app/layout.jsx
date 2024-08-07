@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google';
 import './globals.css';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -13,8 +14,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
-      <body className={poppins.className}>{children}</body>
-    </html>
-  );
+    <ProtectedRoute>
+      <html lang='en'>
+        <body className={poppins.className}>{children}</body>
+      </html>
+    </ProtectedRoute>
+  )
 }
