@@ -13,7 +13,7 @@ const showSuccessAlert = (message) => {
 const showErrorAlert = (err) => {
    Swal.fire({
      title: "Error!",
-     text: err.response.data.message,
+     text: (err.response && err.response.data && err.response.data.message) || "Something wrong",
      icon: "error",
      confirmButtonText: "Try Again",
      confirmButtonColor: "#EB8426", 
