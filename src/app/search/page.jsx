@@ -34,15 +34,15 @@ const SearchResults = () => {
     }
   }, [query]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return (<><MainLayout><p>Loading...</p></MainLayout></>);
+  if (error) return (<><MainLayout><p>Error: {error}</p></MainLayout></>);
 
   return (
     <MainLayout>
       <>
         <h1 className='my-2'>Search Results for: {query}</h1>
         {results.length > 0 ? (
-          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 2xl:gap-5">
             {results.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

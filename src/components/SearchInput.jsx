@@ -22,14 +22,14 @@ const SearchInput = () => {
         <>
             <form
                 onSubmit={handleSearchSubmit}
-                className='items-center flex-1 hidden py-4 ml-24 mr-8 bg-white rounded-full md:flex px-7'
+                className='items-center flex-1 relative hidden py-4 ml-24 mr-8 bg-[#FFF9F3] rounded-full md:flex'
             >
                 <input
                     id='search'
                     name='search'
                     type='text'
-                    className='w-full text-sm outline-none text-slate-600'
-                    placeholder='Search anything . . .'
+                    className='w-full text-sm outline-none text-slate-600 rounded-full py-3 px-6 focus:outline-none focus:ring-0 focus:border-[#EB6D20]'
+                    placeholder='Search template . . .'
                     value={searchQuery}
                     onChange={handleInputChange}
                 />
