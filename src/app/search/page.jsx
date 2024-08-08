@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -17,7 +17,9 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/product?productName=${query}`);
+        const response = await axios.get(
+          `${baseUrl}/product?productName=${query}`
+        );
         const data = response.data.data;
         setResults(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -34,15 +36,29 @@ const SearchResults = () => {
     }
   }, [query]);
 
-  if (loading) return (<><MainLayout><p>Loading...</p></MainLayout></>);
-  if (error) return (<><MainLayout><p>Error: {error}</p></MainLayout></>);
+  if (loading)
+    return (
+      <>
+        <MainLayout>
+          <p>Loading...</p>
+        </MainLayout>
+      </>
+    );
+  if (error)
+    return (
+      <>
+        <MainLayout>
+          <p>Error: {error}</p>
+        </MainLayout>
+      </>
+    );
 
   return (
     <MainLayout>
-      <>
+      <section className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0'>
         <h1 className='my-2'>Search Results for: {query}</h1>
         {results.length > 0 ? (
-          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 2xl:gap-5">
+          <div className='grid grid-cols-3 gap-3 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 2xl:gap-5'>
             {results.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -50,7 +66,7 @@ const SearchResults = () => {
         ) : (
           <p>No results found</p>
         )}
-      </>
+      </section>
     </MainLayout>
   );
 };

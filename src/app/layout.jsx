@@ -1,6 +1,7 @@
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -19,5 +20,5 @@ export default function RootLayout({ children }) {
         <body className={poppins.className}>{children}</body>
       </html>
     </ProtectedRoute>
-  )
+  );
 }

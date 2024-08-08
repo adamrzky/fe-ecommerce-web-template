@@ -12,11 +12,5 @@ export const metadata = {
 };
 
 export default function MainDashboard({ children }) {
-  return (
-    <html lang='en'>
-      <body className={poppins.className}>
-        <DashboardLayout>{children}</DashboardLayout>
-      </body>
-    </html>
-  );
+  return <DashboardLayout>{children}</DashboardLayout>;
 }
