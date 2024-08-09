@@ -91,51 +91,56 @@ const ReviewTable = ({ reviews }) => {
                   </thead>
 
                   <tbody>
-                    {data.length > 0 &&
-                      data.map((item, index) => {
-                        return (
-                          <tr
-                            key={index}
-                            className='text-xs border-b border-neutral-100 hover:bg-neutral-50'
-                          >
-                            <td className='p-3 font-semibold text-start text-neutral-600'>
-                              {index + 1}
-                            </td>
-                            <td className='p-3 text-start text-neutral-600'>
-                              {item.transaction.transaction_id}
-                            </td>
-                            <td className='p-3 text-start text-neutral-600'>
-                              {item.product.name}
-                            </td>
-                            <td className='p-3 text-xs text-start'>
-                              {item.content}
-                            </td>
-                            <td className='p-3 text-start'>
-                              {' '}
-                              {format(
-                                parseISO(item.updated_at),
-                                'dd MMM yyyy - HH:mm'
-                              )}
-                            </td>
-                            <td className='flex p-3 font-medium text-end gap-x-2'>
-                              <Link
-                                href={`/my-reviews/${item.id}/edit`}
-                                className='inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium leading-5 bg-white border rounded-lg cursor-pointer border-neutral-200 text-neutral-800 hover:border-neutral-300 hover:text-neutral-950 active:border-neutral-200'
-                              >
-                                <span>Update</span>
-                              </Link>
-                              <a
-                                onClick={() => {
-                                  handleDelete(item.id);
-                                }}
-                                className='inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium leading-5 text-white border rounded-lg cursor-pointer bg-rose-600 border-neutral-200 hover:border-neutral-300 active:border-neutral-200'
-                              >
-                                <span>Delete</span>
-                              </a>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                    {data && data.length > 0 ? (
+                      data.map((item, index) => (
+                        <tr
+                          key={index}
+                          className='text-xs border-b border-neutral-100 hover:bg-neutral-50'
+                        >
+                          <td className='p-3 font-semibold text-start text-neutral-600'>
+                            {index + 1}
+                          </td>
+                          <td className='p-3 text-start text-neutral-600'>
+                            {item.transaction.transaction_id}
+                          </td>
+                          <td className='p-3 text-start text-neutral-600'>
+                            {item.product.name}
+                          </td>
+                          <td className='p-3 text-xs text-start'>
+                            {item.content}
+                          </td>
+                          <td className='p-3 text-start'>
+                            {format(
+                              parseISO(item.updated_at),
+                              'dd MMM yyyy - HH:mm'
+                            )}
+                          </td>
+                          <td className='flex p-3 font-medium text-end gap-x-2'>
+                            <Link
+                              href={`/my-reviews/${item.id}/edit`}
+                              className='inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium leading-5 bg-white border rounded-lg cursor-pointer border-neutral-200 text-neutral-800 hover:border-neutral-300 hover:text-neutral-950 active:border-neutral-200'
+                            >
+                              <span>Update</span>
+                            </Link>
+                            <a
+                              onClick={() => handleDelete(item.id)}
+                              className='inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium leading-5 text-white border rounded-lg cursor-pointer bg-rose-600 border-neutral-200 hover:border-neutral-300 active:border-neutral-200'
+                            >
+                              <span>Delete</span>
+                            </a>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan='5'
+                          className='px-3 py-10 font-medium text-center text-slate-700'
+                        >
+                          No data available
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

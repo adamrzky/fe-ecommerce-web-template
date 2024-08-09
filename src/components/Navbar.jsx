@@ -2,9 +2,12 @@
 import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
 import SearchInput from './SearchInput';
+import { usePathname } from 'next/navigation';
+import classNames from 'classnames';
 
 const Navbar = () => {
   const { user, logout } = useAuthStore();
+  const pathname = usePathname();
 
   const handleLogout = () => {
     logout();
@@ -21,7 +24,7 @@ const Navbar = () => {
             >
               E-Commerce
             </Link>
-            <SearchInput/>
+            <SearchInput />
             <div className='flex items-center gap-x-6'>
               <div className='flex items-center gap-x-2'>
                 {user ? (
@@ -76,54 +79,149 @@ const Navbar = () => {
         <div className='mt-6 mx-auto max-w-[1320px]'>
           <div className='flex items-center justify-between overflow-scroll flex-nowrap gap-x-12 no-scrollbar'>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
+              <Link
+                href='/'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/',
+                  'text-slate-300': pathname !== '/',
+                })}
+              >
+                Home
+              </Link>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/',
+                  'bg-slate-200': pathname !== '/',
+                })}
+              ></div>
+            </div>
+            <div className='flex flex-col gap-y-3'>
+              <Link
+                href='/blog'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/blog',
+                  'text-slate-300': pathname !== '/blog',
+                })}
+              >
                 Blog
               </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/blog',
+                  'bg-slate-200': pathname !== '/blog',
+                })}
+              ></div>
             </div>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
-                eCommerce
+              <Link
+                href='/products'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/products',
+                  'text-slate-300': pathname !== '/products',
+                })}
+              >
+                Products
               </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/products',
+                  'bg-slate-200': pathname !== '/products',
+                })}
+              ></div>
             </div>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
+              <Link
+                href='/categories'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/categories',
+                  'text-slate-300': pathname !== '/categories',
+                })}
+              >
+                Categories
+              </Link>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/categories',
+                  'bg-slate-200': pathname !== '/categories',
+                })}
+              ></div>
+            </div>
+            <div className='flex flex-col gap-y-3'>
+              <Link
+                href='/portfolio'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/portfolio',
+                  'text-slate-300': pathname !== '/portfolio',
+                })}
+              >
                 Portfolio
               </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/portfolio',
+                  'bg-slate-200': pathname !== '/portfolio',
+                })}
+              ></div>
             </div>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#EB8426] text-sm'>
-                Landing Page
+              <Link
+                href='/promo'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/promo',
+                  'text-slate-300': pathname !== '/promo',
+                })}
+              >
+                Promo
               </Link>
-              <div className='w-[42px] h-1 bg-[#EB8426] rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/promo',
+                  'bg-slate-200': pathname !== '/promo',
+                })}
+              ></div>
             </div>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
-                Corporate/Business
+              <Link
+                href='/guide'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/guide',
+                  'text-slate-300': pathname !== '/guide',
+                })}
+              >
+                Panduan Transaksi
               </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/guide',
+                  'bg-slate-200': pathname !== '/guide',
+                })}
+              ></div>
             </div>
             <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
-                Admin Dashboard
+              <Link
+                href='/contact-us'
+                className={classNames('text-sm', {
+                  'text-[#EB8426]': pathname === '/contact-us',
+                  'text-slate-300': pathname !== '/contact-us',
+                })}
+              >
+                Contact Us
               </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              <div
+                className={classNames('w-[42px] h-1 rounded-full', {
+                  'bg-[#EB8426]': pathname === '/contact-us',
+                  'bg-slate-200': pathname !== '/contact-us',
+                })}
+              ></div>
             </div>
-            <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
-                Education
-              </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
-            </div>
-
-            <div className='flex flex-col gap-y-3'>
-              <Link href='' className='text-[#3E3E3E] text-sm'>
-                Restaurant/Food
-              </Link>
-              <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
-            </div>
+            {user && (
+              <div className='flex flex-col gap-y-3'>
+                <Link href='' className='text-[#3E3E3E] text-sm'>
+                  Dashboard
+                </Link>
+                <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
