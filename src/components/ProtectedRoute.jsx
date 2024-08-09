@@ -10,18 +10,20 @@ const ProtectedRoute = ({children}) => {
    const {user} = useAuthStore();
 
    useEffect(() => {
-      if(user) {
-         const loginRoutesList = ["/auth/login", "/auth/register"];
-         if(loginRoutesList.includes(pathname)) {
-            router.push("/");
-         }
-      } else {
-         const loginRoutesList = ["/account", "/account/password"];
-         if(loginRoutesList.includes(pathname)) {
-            router.push("/auth/login");
+      if (user !== undefined) {
+         if (user) {
+            const loginRoutesList = ["/auth/login", "/auth/register"];
+            if (loginRoutesList.includes(pathname)) {
+               router.push("/");
+            }
+         } else {
+            const protectedRoutesList = ["/account", "/account/password", "/dashboard", "/my-reviews"];
+            if (protectedRoutesList.includes(pathname)) {
+               router.push("/auth/login");
+            }
          }
       }
-   })
+   }, [user, pathname, router]);
 
    return <>{children}</>;
 };
