@@ -1,4 +1,14 @@
+"use client"
+
+import { useRouter } from "next/navigation";
+
 export default function ProductCard({ product }) {
+    const router = useRouter();
+
+    const HandleOnClickLink = (slug) => {
+        router.push(`/products/${slug}`)
+    }
+
     return (
         <>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
@@ -17,7 +27,9 @@ export default function ProductCard({ product }) {
                             3 beds &bull; 2 baths
                         </div> */}
                     </div>
-                    <h4 className="mt-2 font-semibold text-lg leading-tight truncate">{product.name}</h4>
+                    <button>
+                        <h4 onClick={() => HandleOnClickLink(product.slug)} className="mt-2 font-semibold text-lg leading-tight truncate hover:underline">{product.name}</h4>
+                    </button>
                     <div className="mt-1">
                         <span>${product.price}</span>
                     </div>
