@@ -1,17 +1,20 @@
 "use client"
 import MainLayout from "@/components/MainLayout";
 import ReviewProductSection from '@/components/reviews/ReviewProductSection';
+import { useProductCheckoutStore } from "@/store/productCheckoutStore";
 import baseUrl from "@/utils/constains";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const productDetailPage = () => {
     const { slug } = useParams();
     const [imageUrl, setImageUrl] = useState(false);
-    const [results, setResults] = useState([]);
+    const [result, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { setID } = useProductCheckoutStore();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -30,9 +33,14 @@ const productDetailPage = () => {
         fetchResults();
     }, [slug]);
 
-  const changeImage = (e) => {
-    setImageUrl(e.target.src);
-  };
+    const changeImage = (e) => {
+        setImageUrl(e.target.src);
+    };
+
+    const handleBuy = () => {
+        setID(result.id);
+        router.push(`/products/${result.slug}/checkout`);
+    }
 
     if (loading)
         return (
@@ -58,7 +66,7 @@ const productDetailPage = () => {
                 <section className="grid xl:grid-cols-10 grid-cols-5 gap-4">
                     <section className="xl:col-span-7 col-span-10">
                         <div className="xl:h-96 lg:h-96 bg-slate-200 relative">
-                            <img className="w-full h-full object-contain" src={imageUrl || results.image_url} alt="" />
+                            <img className="w-full h-full object-contain" src={imageUrl || result.image_url} alt="" />
                             <button className="absolute left-0 top-[50%]  bg-[#EB8426] hover:bg-[#EB6D20] px-3 py-1 text-white text-lg font-bold">&lt;</button>
                             <button className="absolute right-0 top-[50%]  bg-[#EB8426] hover:bg-[#EB6D20] px-3 py-1 text-white text-lg font-bold">&gt;</button>
                         </div>
@@ -73,140 +81,27 @@ const productDetailPage = () => {
 
                     <section className="xl:col-span-3 col-span-10 shadow-lg p-3 flex flex-col h-full">
                         <div>
-                            <h1 className="text-xl font-semibold text-slate-700">{results.name}</h1>
+                            <h1 className="text-xl font-semibold text-slate-700">{result.name}</h1>
                             <p className="text-slate-600 text-sm mt-1 mb-3">By <span className="text-[#EB6D20]">Rikkriuk</span></p>
                             <div className="flex flex-wrap gap-3">
-                                <p className="inline-block bg-teal-200 text-teal-800 py-1 px-4 text-xs rounded-full uppercase font-semibold tracking-wide">{results.category.name}</p>
+                                <p className="inline-block bg-teal-200 text-teal-800 py-1 px-4 text-xs rounded-full uppercase font-semibold tracking-wide">{result.category.name}</p>
                             </div>
-                            <p className="py-5 text-sm">{results.description}</p>
+                            <p className="py-5 text-sm">{result.description}</p>
                         </div>
 
                         {/* This should be fixed at the bottom of the div */}
                         <div className="flex flex-row items-center justify-between mt-auto gap-3">
                             {/* <p className="line-through text-slate-600 text-sm font-normal">Rp 350.000</p> */}
-                            <p className="text-lg font-semibold">Rp. {results.price}</p>
-                            <button className="py-3 px-7 bg-[#EB8426] hover:bg-[#EB6D20] text-white rounded-full">Buy</button>
+                            <p className="text-lg font-semibold">Rp. {result.price}</p>
+                            <button
+                                className="py-3 px-7 bg-[#EB8426] hover:bg-[#EB6D20] text-white rounded-full"
+                                onClick={() => handleBuy() }>Buy</button>
                         </div>
                     </section>
 
                 </section>
 
-                <ReviewProductSection />
-
-                <section className="w-full">
-                    <h1 className="text-xl my-16 font-semibold text-slate-700 text-center">Review Product</h1>
-                    <section className="relative flex flex-wrap justify-center lg:justify-start gap-3 w-full">
-                        <div className="w-[305px] shadow-lg p-5">
-                            <div>
-                                <div className="flex items-center gap-3">
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        strokeWidth={1.5}
-                                        stroke='#3E3E3E'
-                                        className='size-4'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-                                        />
-                                    </svg>
-                                    <h2>Alexsa</h2>
-                                </div>
-                                <p className="text-slate-500 text-sm mt-1">12-04-2024</p>
-                            </div>
-                            <div className="mt-5">
-                                <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt odio ipsum velit eaque aliquam expedita magnam placeat, vitae beatae similique id nostrum repellendus ab. Nisi tenetur illo, voluptatum dicta deleniti fugiat alias magnam tempore molestias porro natus, quis quia ex.</p>
-                            </div>
-                        </div>
-
-                        <div className="w-80 shadow-lg p-5">
-                            <div>
-                                <div className="flex items-center gap-3">
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        strokeWidth={1.5}
-                                        stroke='#3E3E3E'
-                                        className='size-4'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-                                        />
-                                    </svg>
-                                    <h2>Alexsa</h2>
-                                </div>
-                                <p className="text-slate-500 text-sm mt-1">12-04-2024</p>
-                            </div>
-                            <div className="mt-5">
-                                <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt odio ipsum velit eaque aliquam expedita magnam placeat, vitae beatae similique id nostrum repellendus ab. Nisi tenetur illo, voluptatum dicta deleniti fugiat alias magnam tempore molestias porro natus, quis quia ex.</p>
-                            </div>
-                        </div>
-
-                        <div className="w-80 shadow-lg p-5">
-                            <div>
-                                <div className="flex items-center gap-3">
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        strokeWidth={1.5}
-                                        stroke='#3E3E3E'
-                                        className='size-4'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-                                        />
-                                    </svg>
-                                    <h2>Alexsa</h2>
-                                </div>
-                                <p className="text-slate-500 text-sm mt-1">12-04-2024</p>
-                            </div>
-                            <div className="mt-5">
-                                <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt odio ipsum velit eaque aliquam expedita magnam placeat, vitae beatae similique id nostrum repellendus ab. Nisi tenetur illo, voluptatum dicta deleniti fugiat alias magnam tempore molestias porro natus, quis quia ex.</p>
-                            </div>
-                        </div>
-
-                        <div className="w-80 shadow-lg p-5">
-                            <div>
-                                <div className="flex items-center gap-3">
-                                    <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        strokeWidth={1.5}
-                                        stroke='#3E3E3E'
-                                        className='size-4'
-                                    >
-                                        <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-                                        />
-                                    </svg>
-                                    <h2>Alexsa</h2>
-                                </div>
-                                <p className="text-slate-500 text-sm mt-1">12-04-2024</p>
-                            </div>
-                            <div className="mt-5">
-                                <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt odio ipsum velit eaque aliquam expedita magnam placeat, vitae beatae similique id nostrum repellendus ab. Nisi tenetur illo, voluptatum dicta deleniti fugiat alias magnam tempore molestias porro natus, quis quia ex.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <div className="w-full text-center">
-                        <button className="my-10 bg-[#EB8426] hover:bg-[#EB6D20] px-7 py-3 text-white text-sm font-medium rounded-full">View More</button>
-                    </div>
-                </section>
-
-                <ReviewProductSection />
+                <ReviewProductSection productID={result.id}/>
 
                 <section className="w-full">
                     <h1 className="text-xl my-16 font-semibold text-slate-700 text-center">Other Template</h1>

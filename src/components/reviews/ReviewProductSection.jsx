@@ -6,8 +6,8 @@ import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-const ReviewProductSection = () => {
-  const { id } = useParams();
+const ReviewProductSection = ({productID}) => {
+  const id = productID;
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +36,7 @@ const ReviewProductSection = () => {
 
   return (
     <section className='w-full'>
+      <h1>{id}</h1>
       <h1 className='my-16 text-xl font-semibold text-center text-slate-700'>
         Review Product
       </h1>

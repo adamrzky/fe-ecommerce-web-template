@@ -7,10 +7,11 @@ import baseUrl from "@/utils/constains";
 import Swal from 'sweetalert2';
 
 import axios from "axios";
+import { useProductCheckoutStore } from "@/store/productCheckoutStore";
 
 const CheckoutPage = () => {
   const router = useRouter();
-  const { id } = useParams();
+  const { id } = useProductCheckoutStore();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
