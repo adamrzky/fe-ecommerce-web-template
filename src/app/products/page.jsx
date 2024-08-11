@@ -18,10 +18,6 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   setCategory(categoryParam);
-  // }, [categoryParam]);
-
   useEffect(() => {
     const fetchResults = async () => {
       try {

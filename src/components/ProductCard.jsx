@@ -9,14 +9,16 @@ export default function ProductCard({ product }) {
         router.push(`/products/${slug}`)
     }
 
+    const imageUrl = product.image_url && product.image_url.trim() !== ""
+        ? product.image_url
+        : 'https://placehold.co/600x400/png';
+
     return (
         <>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />
             <div className="bg-white rounded-lg overflow-hidden shadow-2xl">
                 <img
-                    className="h-48 w-full object-cover object-end"
-                    src="https://images.unsplash.com/photo-1570797197190-8e003a00c846?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=968&q=80"
-                    alt={product.name}
+                    className="h-48 w-full object-cover object-end" src={imageUrl} alt={product.name}
                 />
                 <div className="p-6">
                     <div className="flex items-baseline">
@@ -31,7 +33,7 @@ export default function ProductCard({ product }) {
                         <h4 onClick={() => HandleOnClickLink(product.slug)} className="mt-2 font-semibold text-lg leading-tight truncate hover:underline">{product.name}</h4>
                     </button>
                     <div className="mt-1">
-                        <span>${product.price}</span>
+                        <span>Rp. {product.price}k</span>
                     </div>
                     <div className="mt-2 flex items-center">
                         <span className="text-[#EB6D20] font-semibold">
