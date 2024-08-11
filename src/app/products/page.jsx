@@ -10,14 +10,17 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ProductPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { searchQuery, minPrice, maxPrice, category, setMinPrice, setMaxPrice, setCategory } = useSearchStore();
-
+  const router = useRouter();
+  
   const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   setCategory(categoryParam);
+  // }, [categoryParam]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -97,7 +100,7 @@ export default function ProductPage() {
     <MainLayout>
       <section className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0'>
         <div className='flex-row flex gap-4'>
-          <div className='basis-1/3 pr-4'>
+          <div className='basis-1/4 pr-4'>
             <form onSubmit={handleFilterSubmit} className="flex flex-col gap-4">
               <div className="max-w-md">
                 <div className="mb-2 block">
@@ -133,7 +136,7 @@ export default function ProductPage() {
           </div>
 
           {results.length > 0 ? (
-            <div className='basis 2/3'>
+            <div className='basis-3/4'>
               <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>
                 {results.map((product) => (
                   <ProductCard key={product.id} product={product} />
@@ -141,7 +144,7 @@ export default function ProductPage() {
               </div>
             </div>
           ) : (
-            <div className='basis-2/3'>
+            <div className='basis-3/4'>
               <p>No results found</p>
             </div>
           )}

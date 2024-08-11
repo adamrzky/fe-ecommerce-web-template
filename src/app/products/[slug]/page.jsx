@@ -57,7 +57,7 @@ const productDetailPage = () => {
                 <section className="grid xl:grid-cols-10 grid-cols-5 gap-4">
                     <section className="xl:col-span-7 col-span-10">
                         <div className="xl:h-96 lg:h-96 bg-slate-200 relative">
-                            <img className="w-full h-full object-contain" src={imageUrl || "https://cdn.prod.website-files.com/5e593fb060cf877cf875dd1f/5e593fb060cf8738ec75ea77_escape-1%402x.jpg"} alt="" />
+                            <img className="w-full h-full object-contain" src={imageUrl || results.image_url} alt="" />
                             <button className="absolute left-0 top-[50%]  bg-[#EB8426] hover:bg-[#EB6D20] px-3 py-1 text-white text-lg font-bold">&lt;</button>
                             <button className="absolute right-0 top-[50%]  bg-[#EB8426] hover:bg-[#EB6D20] px-3 py-1 text-white text-lg font-bold">&gt;</button>
                         </div>
