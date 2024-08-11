@@ -120,7 +120,7 @@ const Navbar = () => {
                   'text-slate-300': pathname !== '/products',
                 })}
               >
-                Products
+                Product
               </Link>
               <div
                 className={classNames('w-[42px] h-1 rounded-full', {

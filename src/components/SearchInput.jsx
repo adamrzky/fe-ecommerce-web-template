@@ -14,7 +14,7 @@ const SearchInput = () => {
     const handleSearchSubmit = (event) => {
         event.preventDefault();
         if (searchQuery.trim()) {
-          router.push(`/search?q=${searchQuery}`);
+          router.push(`/products?name=${searchQuery}`);
         }
     };
 
