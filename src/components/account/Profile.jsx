@@ -22,7 +22,7 @@ const Profile = ({setIsEdit}) => {
                console.log(err);
             });
       }
-   }, [])
+   }, [user])
 
    return (
       <section id="profile" className="xl:ml-32 mt-10 xl:mt-0 w-full">
