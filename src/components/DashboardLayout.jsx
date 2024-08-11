@@ -47,6 +47,15 @@ export function DashboardLayout({ children }) {
               >
                 Products
               </Navbar.Link>
+              <Navbar.Link
+                href='/dashboard/user'
+                as={Link}
+                {...(pathname === '/dashboard/user'
+                  ? { active: true }
+                  : {})}
+              >
+                User
+              </Navbar.Link>
             </>
           )}
           <Navbar.Link

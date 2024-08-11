@@ -1,0 +1,133 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import baseUrl from '@/utils/constains';
+import { useAuthStore } from '@/store/authStore';
+
+const NewUserPage = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [roleID, setRoleID] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const { user } = useAuthStore();
+  const token = user?.token;
+
+ 
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get(`${baseUrl}/roles`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setRoles(response.data.data);
+      } catch (err) {
+        console.error('Error fetching roles:', err);
+        setError('Failed to fetch roles. Please try again.');
+      }
+    };
+
+    fetchRoles();
+  }, [token]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      await axios.post(`${baseUrl}/users`, {
+        username,
+        email,
+        password,
+        role_id: parseInt(roleID, 10),
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      router.push('/dashboard/user'); 
+    } catch (err) {
+      setError('Failed to create user. Please try again.');
+      console.error('Error creating user:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className='p-10 mx-auto my-10 max-w-7xl'>
+      <h1 className='mb-4 text-2xl font-semibold'>Create New User</h1>
+      <form onSubmit={handleSubmit} className='p-6 bg-white border rounded-lg'>
+        {error && <p className='mb-4 text-red-600'>{error}</p>}
+        <div className='mb-4'>
+          <label htmlFor='username' className='block mb-2 text-sm font-medium'>Username</label>
+          <input
+            type='text'
+            id='username'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className='w-full px-3 py-2 border rounded-md'
+            required
+          />
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='email' className='block mb-2 text-sm font-medium'>Email</label>
+          <input
+            type='email'
+            id='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className='w-full px-3 py-2 border rounded-md'
+            required
+          />
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='password' className='block mb-2 text-sm font-medium'>Password</label>
+          <input
+            type='password'
+            id='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className='w-full px-3 py-2 border rounded-md'
+            required
+          />
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='roleID' className='block mb-2 text-sm font-medium'>Role</label>
+          <select
+            id='roleID'
+            value={roleID}
+            onChange={(e) => setRoleID(e.target.value)}
+            className='w-full px-3 py-2 border rounded-md'
+            required
+          >
+            <option value=''>Select a role</option>
+            {roles.map((role) => (
+              <option key={role.ID} value={role.ID}>
+                {role.Name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button
+          type='submit'
+          className='px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700'
+          disabled={loading}
+        >
+          {loading ? 'Creating...' : 'Create User'}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default NewUserPage;
