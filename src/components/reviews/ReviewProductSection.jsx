@@ -36,7 +36,6 @@ const ReviewProductSection = ({productID}) => {
 
   return (
     <section className='w-full'>
-      <h1>{id}</h1>
       <h1 className='my-16 text-xl font-semibold text-center text-slate-700'>
         Review Product
       </h1>
