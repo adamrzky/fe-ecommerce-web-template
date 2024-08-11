@@ -18,7 +18,7 @@ export function DashboardLayout({ children }) {
         </Navbar.Brand>
         <div className='flex md:order-2'></div>
         <Navbar.Collapse>
-          {user.user.Role.Name == 'Admin' && (
+          {user?.user.Role.Name == 'Admin' && (
             <>
               <Navbar.Link
                 href='/dashboard/transactions'
