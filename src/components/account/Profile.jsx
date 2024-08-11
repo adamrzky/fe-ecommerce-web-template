@@ -10,8 +10,11 @@ const Profile = ({setIsEdit}) => {
    
    useEffect(() => {
       if(user) {
-         const { ID } = user.user;
-         axios.get(`${baseUrl}/profiles/${ID}/user`)
+         axios.get(`${baseUrl}/my-profiles`, {
+            headers: {
+               Authorization: `Bearer ${user.token}`
+            }
+         })
          .then((response) => {
                setProfileData(response.data.data);
             })
@@ -27,32 +30,40 @@ const Profile = ({setIsEdit}) => {
          <div className="bg-white grid xl:grid-cols-3 grid-cols-1 my-7 shadow-lg gap-10 p-8 w-full max-w-[1000px]">
             <div className="">
                <h4 className="text-sm">Full name</h4>
-               <p className="w-full text-sm mt-5">{profileData?.Name || "-"}</p>
+               <p className="w-full text-sm mt-5">{profileData?.name || "-"}</p>
             </div>
 
             <div>
                <h4 className="text-sm">City</h4>
-               <p className="text-sm mt-5">{profileData?.City || "-"}</p>
+               <p className="text-sm mt-5">{profileData?.city || "-"}</p>
             </div>
 
             <div>
                <h4 className="text-sm">Phone number</h4>
-               <p className="text-sm mt-5">{profileData?.Phone || "-"}</p>
+               <p className="text-sm mt-5">{profileData?.phone || "-"}</p>
             </div>
 
             <div>
-               <h4 className="text-sm">Date</h4>
-               <p className="text-sm mt-5">{(profileData?.Date?.split('T')[0]) || "-"}</p>
+               <h4 className="text-sm">Date of Birth</h4>
+               <p className="text-sm mt-5">
+               {profileData?.date ? new Date(profileData.date).toLocaleDateString('en-US', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+               }) : "-"}
+</p>
+
             </div>
 
             <div>
                <h4 className="text-sm">Gender</h4>
-               <p className="text-sm mt-5">{profileData?.Gender || "-"}</p>
+               <p className="text-sm mt-5">{profileData?.gender || "-"}</p>
             </div>
 
             <div>
                <h4 className="text-sm">Address</h4>
-               <p className="text-sm mt-5">{profileData?.Address || "-"}</p>
+               <p className="text-sm mt-5">{profileData?.address || "-"}</p>
             </div>
          </div>
 

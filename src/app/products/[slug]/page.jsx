@@ -1,5 +1,6 @@
 "use client"
 import MainLayout from "@/components/MainLayout";
+import ReviewProductSection from '@/components/reviews/ReviewProductSection';
 import baseUrl from "@/utils/constains";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -29,9 +30,9 @@ const productDetailPage = () => {
         fetchResults();
     }, [slug]);
 
-    const changeImage = (e) => {
-        setImageUrl(e.target.src);
-    }
+  const changeImage = (e) => {
+    setImageUrl(e.target.src);
+  };
 
     if (loading)
         return (
@@ -89,6 +90,8 @@ const productDetailPage = () => {
                     </section>
 
                 </section>
+
+                <ReviewProductSection />
 
                 <section className="w-full">
                     <h1 className="text-xl my-16 font-semibold text-slate-700 text-center">Review Product</h1>
@@ -202,6 +205,8 @@ const productDetailPage = () => {
                         <button className="my-10 bg-[#EB8426] hover:bg-[#EB6D20] px-7 py-3 text-white text-sm font-medium rounded-full">View More</button>
                     </div>
                 </section>
+
+                <ReviewProductSection />
 
                 <section className="w-full">
                     <h1 className="text-xl my-16 font-semibold text-slate-700 text-center">Other Template</h1>

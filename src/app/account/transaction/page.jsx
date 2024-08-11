@@ -1,19 +1,19 @@
 "use client";
 import MainLayout from "@/components/MainLayout";
-// import Menu from "@/components/account/Menu";
+import Menu from "@/components/account/Menu";
 import { useAuthStore } from "@/store/authStore";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "./transactions.css"; // Pastikan Anda mengimpor file CSS yang benar
+import "./transactions.css";
 
-const Transactions = () => {
+const MyTransactions = () => {
   const { user } = useAuthStore();
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/transactions/all`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/mytransactions`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -28,11 +28,11 @@ const Transactions = () => {
   }, [user.token]);
 
   return (
- 
+    <MainLayout>
       <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0 flex flex-col xl:flex-row">
-       
+        <Menu />
         <div className="flex-1 overflow-x-auto mt-10 xl:mt-0">
-          <h1>List Transactions</h1>
+          <h1>My Transactions</h1>
           <table className="transactions-table">
             <thead>
               <tr>
@@ -57,8 +57,8 @@ const Transactions = () => {
           </table>
         </div>
       </section>
-
+    </MainLayout>
   );
 };
 
-export default Transactions;
+export default MyTransactions;
