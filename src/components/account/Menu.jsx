@@ -7,12 +7,18 @@ const Menu = () => {
 
    return (
       <header>
-         <h1 className="font-medium text-md">Set My Profile</h1>
+         <h1 className="font-medium text-md">Profile</h1>
          <nav className="mt-3 xl:ml-2">
             <ul className="flex xl:flex-col">
                <li className="text-sm mt-3 flex flex-col gap-y-3">
                   <Link href="/account" className={`${activeMenu === "profile" && "text-[#EB8426]"}`}>
                      Profile
+                  </Link>
+                  <div className={`w-[42px] h-1 rounded-full ${activeMenu === "profile" ? "bg-[#EB8426]" : "bg-slate-200"}`}></div>
+               </li>
+               <li className="text-sm mt-3 flex flex-col gap-y-3">
+                  <Link href="/account/transaction" className={`${activeMenu === "transaction" && "text-[#EB8426]"}`}>
+                     Transaction
                   </Link>
                   <div className={`w-[42px] h-1 rounded-full ${activeMenu === "profile" ? "bg-[#EB8426]" : "bg-slate-200"}`}></div>
                </li>
