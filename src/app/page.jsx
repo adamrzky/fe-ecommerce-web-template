@@ -1,4 +1,5 @@
 import MainLayout from '@/components/MainLayout';
+import Banner from '@/components/Banner';
 
 export default function Home() {
   return (
@@ -6,13 +7,9 @@ export default function Home() {
       <MainLayout>
         <section
           id='banner'
-          className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0'
+          className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0 bg-slate-500'
         >
-          <div className='grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-3'>
-            <div className='p-4 md:h-[200px] h-36 rounded-md bg-slate-300'></div>
-            <div className='p-4 md:h-[200px] h-36 rounded-md bg-slate-300'></div>
-            <div className='p-4 md:h-[200px] h-36 rounded-md bg-slate-300'></div>
-          </div>
+          <Banner/>
         </section>
         <section
           id='hero'
