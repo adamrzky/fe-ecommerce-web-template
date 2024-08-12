@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
                         <h4 onClick={() => HandleOnClickLink(product.slug)} className="mt-2 font-semibold text-lg leading-tight truncate hover:underline">{product.name}</h4>
                     </button>
                     <div className="mt-1">
-                        <span>Rp. {product.price}k</span>
+                        <span>Rp. {product.price}</span>
                     </div>
                     <div className="mt-2 flex items-center">
                         <span className="text-[#EB6D20] font-semibold">
