@@ -2,11 +2,10 @@
 
 import baseUrl from '@/utils/constains';
 import { format, parseISO } from 'date-fns';
-import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-const ReviewProductSection = ({productID}) => {
+const ReviewProductSection = ({ productID }) => {
   const id = productID;
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);

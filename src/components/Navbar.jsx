@@ -214,9 +214,12 @@ const Navbar = () => {
                 })}
               ></div>
             </div>
-            {user && (
+            {user && user.user.Role.Name == 'Admin' && (
               <div className='flex flex-col gap-y-3'>
-                <Link href='' className='text-[#3E3E3E] text-sm'>
+                <Link
+                  href='/dashboard/transactions'
+                  className='text-[#3E3E3E] text-sm'
+                >
                   Dashboard
                 </Link>
                 <div className='w-[42px] h-1 bg-slate-200 rounded-full'></div>

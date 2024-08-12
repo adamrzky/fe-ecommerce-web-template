@@ -21,7 +21,7 @@ const ReviewForm = ({ id }) => {
   const [input, setInput] = useState(initialForm);
   const [isLoading, setIsLoading] = useState(false);
   const backToTable = () => {
-    router.push('/my-reviews');
+    router.push('/account/my-reviews');
   };
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ReviewForm = ({ id }) => {
         .catch((err) => {
           console.log(err);
           showErrorAlert(err);
-          router.push('/my-reviews');
+          router.push('/account/my-reviews');
         });
     }
   }, [id]);
@@ -81,7 +81,7 @@ const ReviewForm = ({ id }) => {
       }
       setInput(initialForm);
       setIsLoading(false);
-      router.push('/my-reviews');
+      router.push('/account/my-reviews');
     } catch (err) {
       console.log(err);
     }
@@ -90,7 +90,7 @@ const ReviewForm = ({ id }) => {
   return (
     <>
       {/* Page Content */}
-      <div className='container px-4 pt-6 mx-auto mt-12 border border-solid rounded-md lg:px-8 lg:pt-8 xl:max-w-3xl border-slate-200/75'>
+      <div className='container px-4 pt-6 mx-auto border border-solid rounded-md lg:px-8 xl:max-w-3xl border-slate-200/75'>
         <div className='flex flex-col gap-2 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start'>
           <div className='flex grow gap-x-4'>
             <button

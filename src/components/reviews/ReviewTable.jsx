@@ -48,22 +48,13 @@ const ReviewTable = ({ reviews }) => {
 
   return (
     <>
-      {/* Page Header */}
-      <div className='container px-4 pt-6 mx-auto mt-4 lg:px-4 lg:pt-8 xl:max-w-7xl'>
-        <div className='flex flex-col gap-2 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start'>
-          <div className='grow'>
-            <h1 className='mb-1 text-lg font-semibold'>My Reviews</h1>
-          </div>
-        </div>
-      </div>
-
       {/* Page Content */}
       <div className='container p-4 mx-auto lg:p-4 xl:max-w-7xl'>
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8'>
           <div className='flex flex-col bg-white border rounded-lg sm:col-span-2 lg:col-span-4'>
             <div className='flex flex-col items-center justify-between gap-4 p-5 text-center border-b border-neutral-100 sm:flex-row sm:text-start'>
               <div>
-                <h2 className='mb-0.5 font-semibold'>Recent reviews</h2>
+                <h2 className='mb-0.5 font-semibold'>My reviews</h2>
               </div>
             </div>
             <div className='p-5'>
@@ -117,7 +108,7 @@ const ReviewTable = ({ reviews }) => {
                           </td>
                           <td className='flex p-3 font-medium text-end gap-x-2'>
                             <Link
-                              href={`/my-reviews/${item.id}/edit`}
+                              href={`/account/my-reviews/${item.id}/edit`}
                               className='inline-flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium leading-5 bg-white border rounded-lg cursor-pointer border-neutral-200 text-neutral-800 hover:border-neutral-300 hover:text-neutral-950 active:border-neutral-200'
                             >
                               <span>Update</span>
@@ -134,7 +125,7 @@ const ReviewTable = ({ reviews }) => {
                     ) : (
                       <tr>
                         <td
-                          colSpan='5'
+                          colSpan='6'
                           className='px-3 py-10 font-medium text-center text-slate-700'
                         >
                           No data available
