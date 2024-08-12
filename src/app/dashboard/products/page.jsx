@@ -4,12 +4,14 @@ import ProductModal from '@/components/dashboard/products/ProductModal';
 import baseUrl from '@/utils/constains';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { create } from 'zustand';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalState, setModalState] = useState({mode: 'create', product: null});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -19,6 +21,7 @@ export default function ProductsPage() {
 
                 if (data.status === 'success') {
                     setProducts(data.data);
+                    setLoading(false);
                 } else {
                     console.error("Failed to fetch products:", data.message);
                 }
@@ -46,71 +49,109 @@ export default function ProductsPage() {
 
 
     return (
-        <>
-            <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
-                <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                    <div className="rounded-t mb-0 px-4 py-3 border-0">
-                        <div className="flex flex-wrap items-center">
-                            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                                <h3 className="font-semibold text-base text-blueGray-700">Products</h3>
-                            </div>
-                            <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                <button className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={handleModalCreate}>Create</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="block w-full overflow-x-auto">
-                        <table className="items-center bg-transparent w-full border-collapse">
-                            <thead>
-                                <tr>
-                                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Id
-                                    </th>
-                                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Product Name
-                                    </th>
-                                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Category
-                                    </th>
-                                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Price
-                                    </th>
-                                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {products.map((product) => (
-                                    <tr key={product.id}>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            {product.id}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700">
-                                            {product.name}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            {product.category.name}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            Rp. {product.price}
-                                        </td>
-                                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <button className='text-blue-600 hover:underline' onClick={() => handleModalEdit(product)}>
-                                                Edit
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+    <>
+        <section>
+        <div className='container px-4 pt-6 mx-auto lg:px-8 lg:pt-8 xl:max-w-7xl'>
+          <div className='flex flex-col gap-2 text-center sm:flex-row sm:items-center sm:justify-between sm:text-start'>
+            <div className='grow'>
+              <h1 className='mb-1 text-lg font-semibold'>Products</h1>
             </div>
+            <div className='flex items-center justify-center flex-none gap-2 rounded sm:justify-end'>
+              <div className='relative'>
+                <div className='absolute inset-y-0 flex items-center justify-center w-10 my-px rounded-l-lg pointer-events-none start-0 ms-px text-neutral-500'>
+                  <svg
+                    className='inline-block w-4 h-4 hi-mini hi-magnifying-glass'
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    aria-hidden='true'
+                  >
+                    <path
+                      fill-rule='evenodd'
+                      d='M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z'
+                      clip-rule='evenodd'
+                    />
+                  </svg>
+                </div>
+                <button onClick={handleModalCreate}>
+                <span className='inline-flex items-center gap-2 px-4 py-2 text-sm font-medium leading-5 text-white bg-blue-600 rounded-md hover:bg-blue-700'>
+                    Add New Product
+                </span>
+              </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='container p-4 mx-auto lg:p-8 xl:max-w-7xl'>
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 shadow-lg'>
+            <div className='flex flex-col bg-white border rounded-lg sm:col-span-2 lg:col-span-4'>
+              <div className='flex flex-col items-center justify-between gap-4 p-5 text-center border-b border-neutral-100 sm:flex-row sm:text-start'>
+                <div>
+                  <h2 className='mb-0.5 font-semibold'>Products List</h2>
+                </div>
+              </div>
+              <div className='p-5'>
+                <div className='min-w-full overflow-x-auto rounded'>
+                  <table className='min-w-full text-sm align-middle'>
+                    <thead>
+                      <tr className='border-b-2 border-neutral-100'>
+                        <th className='min-w-[140px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-neutral-700'>
+                        ID
+                        </th>
+                        <th className='min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-neutral-700'>
+                        Product Name
+                        </th>
+                        <th className='min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-neutral-700'>
+                        Category
+                        </th>
+                        <th className='min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-neutral-700'>
+                        Price
+                        </th>
+                        <th className='px-3 py-2 text-sm font-semibold tracking-wider uppercase text-start text-neutral-700'>
+                        Action
+                        </th>
+                        <th className='min-w-[100px] p-3 py-2 text-end text-sm font-semibold uppercase tracking-wider text-neutral-700'></th>
+                      </tr>
+                    </thead>
 
-            <ProductModal isOpen={isModalOpen} onClose={handleCloseModal} modalState={modalState} />
+                    <tbody>
+                      {loading ? (
+                        <tr>
+                          <td colSpan="6" className="p-4">
+                            <Skeleton count={5} className='mt-6' />
+                          </td>
+                        </tr>
+                      ) : (
+                        products.map((product) => (
+                          <tr key={product.id} className='border-b border-neutral-100 hover:bg-neutral-50'>
+                            <td className='p-3 font-semibold text-start text-neutral-600'>
+                            {product.id}
+                            </td>
+                            <td className='p-3 text-start text-neutral-600'>
+                            {product.name}
+                            </td>
+                            <td className='p-3 font-medium text-neutral-600'>
+                            {product.category.name}
+                            </td>
+                            <td className='p-3 text-start'>
+                            Rp. {product.price}
+                            </td>
+                            <td className='p-3 font-medium'>
+                              <button onClick={() => handleModalEdit(product)} className='inline-flex items-center justify-center px-3 py-2 text-xs font-medium leading-5 bg-green-600 border rounded-lg cursor-pointer border-neutral-200 text-white hover:border-neutral-30 hover:bg-green-700 active:border-neutral-200'>Update</button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ProductModal isOpen={isModalOpen} onClose={handleCloseModal} modalState={modalState} />
+      </section>
         </>
     );
 }

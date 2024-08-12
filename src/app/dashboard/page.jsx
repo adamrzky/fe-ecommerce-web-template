@@ -38,7 +38,7 @@ export default function DashboardPage() {
 
       {/* Page Content */}
       <div className='container p-4 mx-auto lg:p-8 xl:max-w-7xl'>
-        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8'>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 shadow-lg'>
           <div className='flex flex-col bg-white border rounded-lg sm:col-span-2 lg:col-span-4'>
             <div className='flex flex-col items-center justify-between gap-4 p-5 text-center border-b border-neutral-100 sm:flex-row sm:text-start'>
               <div>
@@ -70,9 +70,7 @@ export default function DashboardPage() {
                       <th className='min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-neutral-700'>
                         Title
                       </th>
-                      <th className='px-3 py-2 text-sm font-semibold tracking-wider uppercase text-start text-neutral-700'>
-                        Status
-                      </th>
+                     
                       <th className='min-w-[100px] p-3 py-2 text-end text-sm font-semibold uppercase tracking-wider text-neutral-700'></th>
                     </tr>
                   </thead>
