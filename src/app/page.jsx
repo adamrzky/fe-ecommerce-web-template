@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '@/utils/constains';
 import ProductCard from '@/components/ProductCard';
+import { ClipLoader } from 'react-spinners';
 
 export default function Home() {
   const router = useRouter();
@@ -59,9 +60,9 @@ export default function Home() {
             Find Your Perfect Template.
             </p>
             {loading ? ( 
-              <div className='basis-3/4'>
-                <p>Loading...</p>
-              </div>
+              <section className="flex items-center justify-center h-screen">
+                  <ClipLoader color="#EB6D20" size={50} />
+              </section>
             ) : results.length > 0 ? ( 
               <div className='basis-3/4'>
                 <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>

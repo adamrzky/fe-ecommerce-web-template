@@ -7,6 +7,7 @@ import { Button, Label, TextInput } from 'flowbite-react';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 export default function CategoryDetailPage({ params }) {
   const { id } = params;
@@ -78,7 +79,10 @@ export default function CategoryDetailPage({ params }) {
     router.push(`/categories/${id}?${queryString}`);
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <section className="flex items-center justify-center h-screen">
+  <ClipLoader color="#EB6D20" size={50} />
+</section>;
+
   if (error) return <p>Error: {error}</p>;
 
   return (

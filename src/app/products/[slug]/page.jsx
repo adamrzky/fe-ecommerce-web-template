@@ -10,6 +10,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 const productDetailPage = () => {
     const { slug } = useParams();
@@ -62,8 +63,8 @@ const productDetailPage = () => {
     if (loading)
         return (
             <MainLayout>
-                <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
-                    <p>Loading...</p>
+                <section className="flex items-center justify-center h-screen">
+                    <ClipLoader color="#EB6D20" size={50} />
                 </section>
             </MainLayout>
         );

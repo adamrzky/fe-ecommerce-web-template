@@ -12,6 +12,8 @@ import Modal from 'react-modal';
 import CryptoJS from 'crypto-js';
 import QRCode from 'qrcode.react';
 import Skeleton from 'react-loading-skeleton';
+import { ClipLoader } from "react-spinners";
+
 
 const CheckoutPage = () => {
   const router = useRouter();
