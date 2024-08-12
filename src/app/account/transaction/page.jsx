@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 const MyTransactions = () => {
   const { setActiveMenu } = useMenuStore();
   const { user } = useAuthStore();
+  const token = user?.token;
   const [transactions, setTransactions] = useState([]);
   const { setTrx } = useTrxStore();
   const router = useRouter();
@@ -24,7 +25,7 @@ const MyTransactions = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/mytransactions`,
           {
             headers: {
-              Authorization: `Bearer ${user.token}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -35,7 +36,7 @@ const MyTransactions = () => {
     };
 
     fetchTransactions();
-  }, [user.token]);
+  }, [token]);
 
   const handleReview = (transaction, trx_id) => {
     setTrx(transaction);
