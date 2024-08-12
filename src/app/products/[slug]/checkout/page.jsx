@@ -11,6 +11,7 @@ import { useProductCheckoutStore } from "@/store/productCheckoutStore";
 import Modal from "react-modal";
 import CryptoJS from 'crypto-js';
 import QRCode from 'qrcode.react';
+import { ClipLoader } from "react-spinners";
 
 
 const CheckoutPage = () => {
@@ -144,7 +145,9 @@ const CheckoutPage = () => {
       setLoading(false);
     }
   };
-  if (loading) return <MainLayout>Loading...</MainLayout>;
+  if (loading) return <MainLayout><section className="flex items-center justify-center h-screen">
+  <ClipLoader color="#EB6D20" size={50} />
+</section></MainLayout>;
   if (!product) return <MainLayout>Product not found!</MainLayout>;
 
   return (

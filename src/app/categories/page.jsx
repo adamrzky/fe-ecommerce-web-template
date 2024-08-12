@@ -4,6 +4,7 @@ import MainLayout from '@/components/MainLayout';
 import CategoryCard from '@/components/CategoryCard'; 
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { ClipLoader } from "react-spinners";
 import baseUrl from '@/utils/constains';
 
 export default function CategoryPage() {
@@ -30,9 +31,9 @@ export default function CategoryPage() {
   if (loading)
     return (
       <MainLayout>
-        <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
-          <p>Loading...</p>
-        </section>
+         <section className="flex items-center justify-center h-screen">
+            <ClipLoader color="#EB6D20" size={50} />
+         </section>
       </MainLayout>
     );
 
