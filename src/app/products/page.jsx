@@ -5,7 +5,7 @@ import ProductCard from '@/components/ProductCard';
 import { useSearchStore } from '@/store/searchStore';
 import baseUrl from '@/utils/constains';
 import axios from 'axios';
-import { Button, Label, Select, TextInput } from 'flowbite-react';
+import { Button, Label, Pagination, Select, TextInput } from 'flowbite-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
@@ -13,11 +13,15 @@ import { ClipLoader } from 'react-spinners';
 export default function ProductPage() {
   const { searchQuery, minPrice, maxPrice, category, setMinPrice, setMaxPrice, setCategory } = useSearchStore();
   const router = useRouter();
-  
+
   const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(Number(useSearchParams().get('page')) || 1);
+  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -27,11 +31,14 @@ export default function ProductPage() {
             productName: searchQuery,
             minPrice,
             maxPrice,
-            category
+            category,
+            limit: itemsPerPage,
+            offset: (currentPage - 1) * itemsPerPage,
           }
         });
-        const data = response.data.data;
+        const { data, counts } = response.data; // Adjust according to your API response
         setResults(Array.isArray(data) ? data : []);
+        setTotalItems(counts);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -51,35 +58,64 @@ export default function ProductPage() {
 
     fetchResults();
     fetchCategories();
-  }, [searchQuery, minPrice, maxPrice, category]);
+  }, [searchQuery, minPrice, maxPrice, category, currentPage]);
 
   const handleFilterSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const queryParams = {
-      name: searchQuery,
-      minPrice: form.get("minPrice"),
-      maxPrice: form.get("maxPrice"),
-      category: form.get("category"),
+      productName: searchQuery,
+      minPrice: form.get("minPrice") || undefined,
+      maxPrice: form.get("maxPrice") || undefined,
+      category: form.get("category") || undefined,
+      page: currentPage, // Ensure page is included
     };
 
     setMinPrice(queryParams.minPrice);
     setMaxPrice(queryParams.maxPrice);
     setCategory(queryParams.category);
 
-    const queryString = Object.entries(queryParams)
-      .filter(([_, value]) => value)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
+    // Only include parameters with values
+    const filteredParams = Object.entries(queryParams)
+      .filter(([_, value]) => value !== undefined && value !== "")
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
 
+    const queryString = new URLSearchParams(filteredParams).toString();
     router.push(`?${queryString}`);
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    const queryParams = {
+      productName: searchQuery,
+      minPrice,
+      maxPrice,
+      category,
+      page: pageNumber, // Always include page
+    };
+
+    // Only include parameters with values
+    const filteredParams = Object.entries(queryParams)
+      .filter(([_, value]) => value !== undefined && value !== "")
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {});
+
+    const queryString = new URLSearchParams(filteredParams).toString();
+    router.push(`?${queryString}`);
+  };
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   if (loading)
     return (
       <MainLayout>
         <section className="flex items-center justify-center h-screen">
-            <ClipLoader color="#EB6D20" size={50} />
+          <ClipLoader color="#EB6D20" size={50} />
         </section>
       </MainLayout>
     );
@@ -134,10 +170,18 @@ export default function ProductPage() {
 
           {results.length > 0 ? (
             <div className='basis-3/4'>
-              <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>
+              <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5 mb-5'>
                 {results.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
+              </div>
+              <div className="flex justify-center mb-5">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  showIcons
+                />
               </div>
             </div>
           ) : (
@@ -145,6 +189,8 @@ export default function ProductPage() {
               <p>No results found</p>
             </div>
           )}
+
+
         </div>
       </section>
     </MainLayout>
