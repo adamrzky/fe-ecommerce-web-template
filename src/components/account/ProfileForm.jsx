@@ -28,9 +28,9 @@ const ProfileForm = ({ isEdit, setIsEdit }) => {
          gender: gender.value,
          address: address.value
       };
-
+   
       try {
-         if (profileExists) {
+         if (profileExists && profileData.id) { 
             await axios.put(`${baseUrl}/profiles/${profileData.id}`, profileModel, {
                headers: {
                   Authorization: `Bearer ${user.token}`,
@@ -43,7 +43,7 @@ const ProfileForm = ({ isEdit, setIsEdit }) => {
                }
             });
          }
-
+   
          showSuccessAlert("Success Update Profile");
          setIsEdit(false);
       } catch (err) {
@@ -51,6 +51,7 @@ const ProfileForm = ({ isEdit, setIsEdit }) => {
          console.log(err);
       }
    };
+   
 
    useEffect(() => {
       if (isEdit) {
@@ -61,11 +62,15 @@ const ProfileForm = ({ isEdit, setIsEdit }) => {
          })
          .then((response) => {
             const profileResponse = response.data.data;
-            setProfileData({
-               ...profileResponse,
-               date: profileResponse.date.split("T")[0] // Format date ke YYYY-MM-DD
-            });
-            setProfileExists(true);
+            if (profileResponse && profileResponse.id) { 
+               setProfileData({
+                  ...profileResponse,
+                  date: profileResponse.date.split("T")[0] 
+               });
+               setProfileExists(true);
+            } else {
+               setProfileExists(false);
+            }
          })
          .catch((err) => {
             setProfileExists(false);
@@ -73,6 +78,7 @@ const ProfileForm = ({ isEdit, setIsEdit }) => {
          });
       }
    }, [isEdit]);
+   
 
    const handleInputChange = (event) => {
       const { name, value } = event.target;
