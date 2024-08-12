@@ -65,7 +65,7 @@ export default function Home() {
             ) : results.length > 0 ? ( 
               <div className='basis-3/4'>
                 <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>
-                  {results.slice(0, 3).map((product) => (
+                  {results.slice(0, 6).map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
@@ -82,7 +82,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section
+        {/* <section
           id='subscribe'
           className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0'
         >
@@ -152,8 +152,8 @@ export default function Home() {
               </a>
             </div>
           </div>
-        </section>
-        <section>
+        </section> */}
+        {/* <section>
           <div className='mx-auto max-w-[1920px] my-8 px-10 xl:px-0 bg-[#F5F6F8]'>
             <div className='flex items-center py-4'>
               <p className='mx-auto text-xs font-medium text-center md:text-sm'>
@@ -161,7 +161,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </section>
+        </section> */}
       </MainLayout>
     </>
   );
