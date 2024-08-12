@@ -37,7 +37,7 @@ export default function Home() {
       <MainLayout>
         <section
           id='banner'
-          className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0 bg-slate-500'
+          className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0'
         >
           <Banner/>
         </section>
