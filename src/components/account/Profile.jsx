@@ -46,14 +46,16 @@ const Profile = ({setIsEdit}) => {
             <div>
                <h4 className="text-sm">Date of Birth</h4>
                <p className="text-sm mt-5">
-               {profileData?.date ? new Date(profileData.date).toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-               }) : "-"}
-</p>
-
+                  {profileData?.date && profileData.date !== "0001-01-01T00:00:00Z" ? 
+                     new Date(profileData.date).toLocaleDateString('en-US', {
+                     weekday: 'long',
+                     year: 'numeric',
+                     month: 'long',
+                     day: 'numeric'
+                     }) 
+                     : "-"
+                  }
+               </p>
             </div>
 
             <div>
