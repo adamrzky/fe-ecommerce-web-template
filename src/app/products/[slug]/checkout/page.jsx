@@ -178,10 +178,12 @@ const CheckoutPage = () => {
       return 'ORD' + Math.random().toString(36).substring(2, 15).toUpperCase();
     };
 
+    const uniquiOrderId = generateOrderId();
+
     const paymentPayload = {
       merchantCode: 'DS19954',
       paymentAmount: parseInt(product.price),
-      merchantOrderID: generateOrderId(),
+      merchantOrderID: uniquiOrderId,
       productDetails: 'Pembayaran untuk Toko Contoh',
       email: profileData?.user.email,
       paymentMethod: 'SP', // Using selected payment method
@@ -210,7 +212,7 @@ const CheckoutPage = () => {
         product_ID: parseInt(product.id),
         status: 1,
         total: parseFloat(product.price),
-        trx_ID: generateOrderId(),
+        trx_ID: uniquiOrderId,
         user_ID: profileData.user_id,
       };
 
