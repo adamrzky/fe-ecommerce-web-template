@@ -36,7 +36,7 @@ export default function ProductPage() {
             offset: (currentPage - 1) * itemsPerPage,
           }
         });
-        const { data, counts } = response.data; // Adjust according to your API response
+        const { data, counts } = response.data;
         setResults(Array.isArray(data) ? data : []);
         setTotalItems(counts);
       } catch (err) {
@@ -68,14 +68,13 @@ export default function ProductPage() {
       minPrice: form.get("minPrice") || undefined,
       maxPrice: form.get("maxPrice") || undefined,
       category: form.get("category") || undefined,
-      page: currentPage, // Ensure page is included
+      page: 1,
     };
 
     setMinPrice(queryParams.minPrice);
     setMaxPrice(queryParams.maxPrice);
     setCategory(queryParams.category);
 
-    // Only include parameters with values
     const filteredParams = Object.entries(queryParams)
       .filter(([_, value]) => value !== undefined && value !== "")
       .reduce((acc, [key, value]) => {
@@ -85,6 +84,8 @@ export default function ProductPage() {
 
     const queryString = new URLSearchParams(filteredParams).toString();
     router.push(`?${queryString}`);
+
+    setCurrentPage(1);
   };
 
   const handlePageChange = (pageNumber) => {
@@ -94,10 +95,9 @@ export default function ProductPage() {
       minPrice,
       maxPrice,
       category,
-      page: pageNumber, // Always include page
+      page: pageNumber,
     };
 
-    // Only include parameters with values
     const filteredParams = Object.entries(queryParams)
       .filter(([_, value]) => value !== undefined && value !== "")
       .reduce((acc, [key, value]) => {
