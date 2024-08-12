@@ -21,7 +21,6 @@ const MyReviewsPage = () => {
     const fetchMyReviews = async () => {
       try {
         let result = await fetch(`${baseUrl}/my-reviews`, {
-          cache: 'no-store',
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +33,6 @@ const MyReviewsPage = () => {
         let data = await result.json();
         setReviews(data.data);
       } catch (error) {
-        console.log('error idins');
         console.log(error);
       } finally {
         setLoading(false);

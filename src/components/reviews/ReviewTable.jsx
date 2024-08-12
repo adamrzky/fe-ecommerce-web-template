@@ -11,11 +11,10 @@ const ReviewTable = ({ reviews }) => {
   const { user } = useAuthStore();
   const token = user?.token;
   const [data, setData] = useState(reviews);
-  const [fetchStatus, setFetchStatus] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState(true);
 
   const fetchData = async () => {
     let res = await axios.get(`${baseUrl}/my-reviews`, {
-      cache: 'no-store',
       headers: {
         Authorization: `Bearer ${token}`,
       },

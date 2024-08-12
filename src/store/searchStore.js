@@ -1,15 +1,15 @@
-import create from "zustand";
+import { create } from 'zustand';
 
 export const useSearchStore = create((set) => ({
-  searchQuery: "",
+  searchQuery: '',
   setSearchQuery: (query) => set({ searchQuery: query }),
 
-  minPrice: "",
+  minPrice: '',
   setMinPrice: (minPrice) => set({ minPrice }),
 
-  maxPrice: "",
+  maxPrice: '',
   setMaxPrice: (maxPrice) => set({ maxPrice }),
 
-  category: "",
+  category: '',
   setCategory: (category) => set({ category }),
 }));

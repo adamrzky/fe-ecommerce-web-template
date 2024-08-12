@@ -6,11 +6,15 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './transactions.css';
 import useMenuStore from '@/store/menuStore';
+import { useTrxStore } from '@/store/trxStore';
+import { useRouter } from 'next/navigation';
 
 const MyTransactions = () => {
   const { setActiveMenu } = useMenuStore();
   const { user } = useAuthStore();
   const [transactions, setTransactions] = useState([]);
+  const { setTrx } = useTrxStore();
+  const router = useRouter();
 
   useEffect(() => {
     setActiveMenu('my-transaction');
@@ -33,6 +37,11 @@ const MyTransactions = () => {
     fetchTransactions();
   }, [user.token]);
 
+  const handleReview = (transaction, trx_id) => {
+    setTrx(transaction);
+    router.push(`/account/transaction/${trx_id}/create-review`);
+  };
+
   return (
     <MainLayout>
       <section className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0 flex flex-col xl:flex-row'>
@@ -47,6 +56,8 @@ const MyTransactions = () => {
                 <th>Total</th>
                 <th>Payment Type</th>
                 <th>Payment Date</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -57,6 +68,23 @@ const MyTransactions = () => {
                   <td>Rp {transaction.TOTAL.toLocaleString()}</td>
                   <td>{transaction.PAY_TYPE}</td>
                   <td>{transaction.pay_DATE || 'N/A'}</td>
+                  <td>{transaction.STATUS == 1 ? 'Pending' : 'Success'}</td>
+                  {transaction.STATUS == 2 ? (
+                    <td>
+                      <button
+                        onClick={() =>
+                          handleReview(transaction, transaction.TRX_ID)
+                        }
+                        className='text-sm font-medium text-[#EB8426] cursor-pointer'
+                      >
+                        Create Review
+                      </button>
+                    </td>
+                  ) : (
+                    <td>
+                      <p></p>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
