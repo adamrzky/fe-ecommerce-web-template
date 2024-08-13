@@ -132,7 +132,7 @@ const Transactions = () => {
                               <div className={`inline-block px-2 py-1 text-xs font-semibold leading-4 text-blue-800 ${transaction.STATUS == 1 ? "bg-blue-100" : "bg-green-200"} bg-blue-100 rounded-full whitespace-nowrap`}>
                               {transaction.STATUS == 1 ? "Pending" : "Success"}
                               </div>
-                              <button className='inline-flex items-center justify-center px-3 py-2 text-xs font-medium leading-5 bg-blue-600 border rounded-lg cursor-pointer border-neutral-200 text-white hover:border-neutral-30 hover:bg-blue-700 active:border-neutral-200'>Process</button>
+                              <button className='inline-flex items-center justify-center px-3 py-2 text-xs font-medium leading-5 bg-blue-600 border rounded-lg cursor-pointer border-neutral-200 text-white hover:border-neutral-30 hover:bg-blue-700 active:border-neutral-200'>Send Callback</button>
                             </td>
                           </tr>
                         ))
