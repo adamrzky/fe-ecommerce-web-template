@@ -99,7 +99,7 @@ const productDetailPage = () => {
                         </div>
 
                         <div className="flex flex-row items-center justify-between mt-auto gap-3">
-                            <p className="text-lg font-semibold">Rp. {result.price}k</p>
+                            <p className="text-lg font-semibold">Rp. {result.price}</p>
                             <button
                                 className="py-3 px-7 bg-[#EB8426] hover:bg-[#EB6D20] text-white rounded-full"
                                 onClick={() => handleBuy()}>Buy</button>

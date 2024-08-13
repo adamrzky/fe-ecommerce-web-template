@@ -59,7 +59,7 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
             name: formData.name,
             price: parseInt(formData.price, 10),
             description: formData.description,
-            imageURL: formData.imageURL,
+            image_url: formData.imageURL,
             category_id: parseInt(selectedCategory, 10),
         };
 
@@ -76,8 +76,24 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
                 await axios.post(`${baseUrl}/product`, payload, config);
             }
             onClose();
-        } catch (error) {
+        } catch ( error) {
             console.error('Error submitting form:', error);
+        }
+    };
+
+    // Handle product deletion
+    const handleDelete = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        try {
+            await axios.delete(`${baseUrl}/product/${modalState.product.id}`, config);
+            onClose();
+        } catch (error) {
+            console.error('Error deleting product:', error);
         }
     };
 
@@ -90,7 +106,7 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
                     <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                Create New Product
+                                {modalState.mode === 'edit' ? 'Edit Product' : 'Create New Product'}
                             </h3>
                             <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={onClose}>
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -110,18 +126,18 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type product name"
                                         value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}/>
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                                 </div>
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
                                     <input
                                         type="number"
-                                        name="price" 
-                                        id="price" 
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" 
-                                        placeholder="$2999" 
+                                        name="price"
+                                        id="price"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        placeholder="$2999"
                                         value={formData.price}
-                                        onChange={(e) => setFormData({ ...formData, price: e.target.value })}/>
+                                        onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
                                 </div>
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
@@ -141,9 +157,9 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
                                 </div>
                                 <div className="col-span-2">
                                     <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                                    <textarea 
-                                        id="description" 
-                                        rows="4" 
+                                    <textarea
+                                        id="description"
+                                        rows="4"
                                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         value={formData.description}
                                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -151,25 +167,35 @@ export default function ProductModal({ isOpen, onClose, modalState }) {
                                 </div>
                                 <div className="col-span-2">
                                     <label htmlFor="imageURL" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
-                                    <input 
+                                    <input
                                         type="text"
                                         name="imageURL"
                                         id="imageURL"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         value={formData.imageURL}
                                         placeholder="http://"
-                                        onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}/>
+                                        onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })} />
                                 </div>
                             </div>
-                            <button 
-                                type="submit" 
-                                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                {modalState.mode === 'edit' ? 'Update' : 'Submit'}
+                            <button
+                                type="submit"
+                                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                                {modalState.mode === 'edit' ? 'Update' : 'Create product'}
                             </button>
+                            {modalState.mode === 'edit' && (
+                                <button
+                                    type="button"
+                                    className="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ms-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                    onClick={handleDelete}
+                                >
+                                    Delete
+                                </button>
+                            )}
                         </form>
                     </div>
                 </div>
             </div>
         </>
-    )
+    );
 }
