@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
       '/account/password',
       '/dashboard',
       '/my-reviews',
-      '/account/transactions',
+      '/account/transaction',
       '/account/my-reviews',
     ];
 

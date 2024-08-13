@@ -45,7 +45,7 @@ const MyReviewsPage = () => {
   return (
     <MainLayout>
       <section
-        id='account'
+        id='review'
         className='mx-auto max-w-[1320px] my-8 px-10 xl:px-0 flex flex-col xl:flex-row'
       >
         <Menu />

@@ -8,6 +8,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 const productDetailPage = () => {
     const { slug } = useParams();
@@ -65,7 +66,7 @@ const productDetailPage = () => {
         return (
             <MainLayout>
                 <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
-                    <p>Loading...</p>
+                    <Skeleton count={5} className='mt-6' />
                 </section>
             </MainLayout>
         );
@@ -101,17 +102,17 @@ const productDetailPage = () => {
                     <section className="xl:col-span-3 col-span-10 shadow-lg p-3 flex flex-col h-full">
                         <div>
                             <h1 className="text-xl font-semibold text-slate-700">{result.name}</h1>
-                            <p className="text-slate-600 text-sm mt-1 mb-3">By <span className="text-[#EB6D20]">Rikkriuk</span></p>
-                            <div className="flex flex-wrap gap-3">
-                                <p className="inline-block bg-teal-200 text-teal-800 py-1 px-4 text-xs rounded-full uppercase font-semibold tracking-wide">{result.category.name}</p>
+                            {/* <p className="text-slate-600 text-sm mt-1 mb-3">By <span className="text-[#EB6D20]">Rikkriuk</span></p> */}
+                            <div className="flex flex-wrap gap-3 mt-2">
+                                <p className="inline-block bg-teal-200 text-teal-800 py-1 px-4 text-xs rounded-full uppercase font-semibold tracking-wide">{result?.category.name || "-"}</p>
                             </div>
-                            <p className="py-5 text-sm">{result.description}</p>
+                            <p className="py-5 text-sm">{result?.description || "-"}</p>
                         </div>
 
                         {/* This should be fixed at the bottom of the div */}
                         <div className="flex flex-row items-center justify-between mt-auto gap-3">
                             {/* <p className="line-through text-slate-600 text-sm font-normal">Rp 350.000</p> */}
-                            <p className="text-lg font-semibold">Rp. {result.price}k</p>
+                            <p className="text-lg font-semibold">Rp. {result?.price || "-"}k</p>
                             <button
                                 className="py-3 px-7 bg-[#EB8426] hover:bg-[#EB6D20] text-white rounded-full"
                                 onClick={() => handleBuy()}>Buy</button>

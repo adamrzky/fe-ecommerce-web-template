@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Button, Label, Select, TextInput } from 'flowbite-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 export default function ProductPage() {
   const { searchQuery, minPrice, maxPrice, category, setMinPrice, setMaxPrice, setCategory } = useSearchStore();
@@ -78,7 +79,7 @@ export default function ProductPage() {
     return (
       <MainLayout>
         <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
-          <p>Loading...</p>
+            <Skeleton count={5} className='mt-6' />
         </section>
       </MainLayout>
     );
@@ -130,20 +131,28 @@ export default function ProductPage() {
               <Button style={{ backgroundColor: '#EB8426', color: 'white' }} pill type="submit">Apply</Button>
             </form>
           </div>
-
-          {results.length > 0 ? (
-            <div className='basis-3/4'>
-              <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>
-                {results.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+          
+          {loading ? (
+              <div className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
+                <Skeleton count={5} className='mt-6' />
               </div>
-            </div>
-          ) : (
-            <div className='basis-3/4'>
-              <p>No results found</p>
-            </div>
-          )}
+            ) : (
+              <>
+                {results.length > 0 ? (
+                  <div className='basis-3/4'>
+                    <div className='grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 2xl:gap-5'>
+                      {results.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className='basis-3/4'>
+                    <p>No results found</p>
+                  </div>
+                )}
+              </>
+            )}
         </div>
       </section>
     </MainLayout>

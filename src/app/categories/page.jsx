@@ -5,6 +5,7 @@ import CategoryCard from '@/components/CategoryCard';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import baseUrl from '@/utils/constains';
+import Skeleton from 'react-loading-skeleton';
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);
@@ -31,7 +32,7 @@ export default function CategoryPage() {
     return (
       <MainLayout>
         <section className="mx-auto max-w-[1320px] my-8 px-10 xl:px-0">
-          <p>Loading...</p>
+          <Skeleton count={5} className='mt-6' />
         </section>
       </MainLayout>
     );
