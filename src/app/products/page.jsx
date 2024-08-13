@@ -7,7 +7,7 @@ import baseUrl from '@/utils/constains';
 import axios from 'axios';
 import { Button, Label, Pagination, Select, TextInput } from 'flowbite-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 export default function ProductPage() {
@@ -177,14 +177,16 @@ export default function ProductPage() {
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
-              <div className="flex justify-center mb-5">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                  showIcons
-                />
-              </div>
+              <Suspense>
+                <div className="flex justify-center mb-5">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                    showIcons
+                    />
+                </div>
+              </Suspense>
             </div>
           ) : (
             <div className='basis-3/4'>
